@@ -1,2 +1,2 @@
 # cbuild
-Self hoting C building tool
+Self hosting C project building tool
