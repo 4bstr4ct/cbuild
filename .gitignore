@@ -52,5 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Additionals
-./docs/extentions
-./docs/helpers
+*extentions
+*helpers
+*build
+*config
