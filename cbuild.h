@@ -110,6 +110,142 @@ LPSTR _lastErrorAsString(void)
 #	include <dirent.h>
 #endif
 
+
+
+/**
+ * @addtogroup RBMM
+ * 
+ * @{
+ */
+
+struct _RBMM_String
+{
+	char* buffer;
+	unsigned long long length;
+};
+
+struct _RBMM_String* _RBMM_createString(const char* const buffer)
+{
+	struct _RBMM_String* string = (struct _RBMM_String*)malloc(sizeof(struct _RBMM_String));
+	assert(string != NULL);
+	string->length = strlen(buffer);
+	string->buffer = (char*)malloc((string->length + 1) * sizeof(char));
+	assert(string->buffer != NULL);
+	memcpy(string->buffer, buffer, string->length);
+	string->buffer[string->length + 1] = '\0';
+	return string;
+}
+
+void _RBMM_destroyString(struct _RBMM_String* string)
+{
+	free(string->buffer);
+	free(string);
+}
+
+struct _RBMM_Node
+{
+	struct _RBMM_String* string;
+	struct _RBMM_Node* next;
+};
+
+struct _RBMM_Node* _RBMM_createNode(struct _RBMM_String* string, struct _RBMM_Node* next)
+{
+	struct _RBMM_Node* node = (struct _RBMM_Node*)malloc(sizeof(struct _RBMM_Node));
+	assert(node != NULL);
+	node->string = string;
+	node->next = next;
+	return node;
+}
+
+void _RBMM_destroyNode(struct _RBMM_Node* node)
+{
+	_RBMM_destroyString(node->string);
+	free(node);
+}
+
+struct _RBMM_Region
+{
+	struct _RBMM_Node* root;
+	struct _RBMM_Node* iterator;
+	unsigned long long count;
+};
+
+static struct _RBMM_Region* __region = NULL;
+
+void _RBMM_createRegion()
+{
+	__region = (struct _RBMM_Region*)malloc(sizeof(struct _RBMM_Region));
+	assert(__region != NULL);
+	__region->root = NULL;
+	__region->iterator = NULL;
+	__region->count = 0;
+}
+
+#ifndef CREATE_REGION
+#	define CREATE_REGION() \
+	{ \
+		_RBMM_createRegion(); \
+	}
+#endif
+
+void _RBMM_addToRegion(const char* const buffer)
+{
+	assert(__region != NULL);
+
+	if (__region->root == NULL)
+	{
+		__region->root = (struct _RBMM_Node*)malloc(sizeof(struct _RBMM_Node));
+		assert(__region->root != NULL);
+		__region->root = _RBMM_createNode(_RBMM_createString(buffer), NULL);
+		__region->iterator = __region->root;
+	}
+	else if (__region->iterator->next == NULL)
+	{
+		__region->iterator->next = (struct _RBMM_Node*)malloc(sizeof(struct _RBMM_Node));
+		assert(__region->iterator->next != NULL);
+		__region->iterator->next = _RBMM_createNode(_RBMM_createString(buffer), NULL);
+		__region->iterator = __region->iterator->next;
+	}
+
+	++__region->count;
+}
+
+#ifndef ADD_TO_REGION
+#	define ADD_TO_REGION(buffer) \
+	{ \
+		_RBMM_addToRegion(buffer); \
+	}
+#endif
+
+void _RBMM_destroyRegion()
+{
+	assert(__region != NULL);
+	__region->iterator = __region->root;
+
+	while (__region->iterator != NULL)
+	{
+		struct _RBMM_Node* temp = __region->iterator;
+		__region->iterator = __region->iterator->next;
+		_RBMM_destroyNode(temp);
+		--__region->count;
+	}
+
+	free(__region);
+}
+
+#ifndef DESTROY_REGION
+#	define DESTROY_REGION() \
+	{ \
+		_RBMM_destroyRegion(); \
+	}
+#endif
+
+/**
+ * @}
+ */
+
+
+
 #ifndef STDOUT
 #	define STDOUT stdout
 #endif

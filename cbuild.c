@@ -12,6 +12,13 @@ static void _usage(FILE* stream, const char* const program)
 
 int _main(const char* const program, int argc, char** argv)
 {
+	CREATE_REGION();
+	ADD_TO_REGION("path/to/something1");
+	ADD_TO_REGION("path/to/something2");
+	ADD_TO_REGION("path/to/something3");
+	DESTROY_REGION();
+
+	/*
 	MKDIR(JOIN("!", "markas", "yra", "genijus"));
 	FOREACH_ARG_CMD_ARGS(flag, argc, argv,
 	{
@@ -48,6 +55,7 @@ int _main(const char* const program, int argc, char** argv)
 #endif
 
 	RM(PATH("examples", "test", "build", "bin"));
+	*/
 
 	return 0;
 }
