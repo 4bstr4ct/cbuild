@@ -12,6 +12,7 @@ static void _usage(FILE* stream, const char* const program)
 
 int _main(const char* const program, int argc, char** argv)
 {
+	MKDIR(JOIN("!", "markas", "yra", "genijus"));
 	FOREACH_ARG_CMD_ARGS(flag, argc, argv,
 	{
 		if (STREQL(flag, "--help") OR STREQL(flag, "-h"))

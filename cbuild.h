@@ -24,7 +24,7 @@ struct DIR
 	struct dirent* dirent;
 };
 
-DIR* opendir(const char* dirpath)
+struct DIR* opendir(const char* dirpath)
 {
 	assert(dirpath);
 
@@ -49,13 +49,13 @@ DIR* opendir(const char* dirpath)
 	}
 }
 
-struct dirent* readdir(DIR* dirp)
+struct dirent* readdir(struct DIR* dirp)
 {
 	assert(dirp);
 
 	if (dirp->dirent == NULL)
 	{
-		dirp->direntdirp->dirent = (struct dirent*)malloc(sizoef(struct dirent));
+		dirp->dirent = (struct dirent*)malloc(sizoef(struct dirent));
 	}
 	else
 	{
@@ -69,7 +69,7 @@ struct dirent* readdir(DIR* dirp)
 	strncpy(dirp->dirent->d_name, dirp->data.cFileName, sizeof(dirp->dirent->d_name) - 1);
 }
 
-void closedir(DIR* dirp)
+void closedir(struct DIR* dirp)
 {
 	assert(dirp);
 
@@ -177,6 +177,19 @@ LPSTR _lastErrorAsString(void)
 #	define PATH_SEPARATOR_LENGTH (sizeof(PATH_SEPARATOR) - 1)
 #endif
 
+const char* _shift(int* argc, char*** argv);
+
+#ifndef FOREACH_ARG_CMD_ARGS
+#	define FOREACH_ARG_CMD_ARGS(argument, count, arguments, body) \
+	{ \
+		while (argc > 0) \
+		{ \
+			const char* argument = _shift(&argc, &argv); \
+			body; \
+		} \
+	}
+#endif
+
 #ifndef FOREACH_ARG_IN_VA_ARGS
 #	define FOREACH_ARG_IN_VA_ARGS(ignore, type, argument, arguments, body) \
 	{ \
@@ -188,19 +201,6 @@ LPSTR _lastErrorAsString(void)
 		} \
 		 \
 		va_end(arguments); \
-	}
-#endif
-
-const char* _shift(int* argc, char*** argv);
-
-#ifndef FOREACH_ARG_CMD_ARGS
-#	define FOREACH_ARG_CMD_ARGS(argument, count, arguments, body) \
-	{ \
-		while (argc > 0) \
-		{ \
-			const char* argument = _shift(&argc, &argv); \
-			body; \
-		} \
 	}
 #endif
 
