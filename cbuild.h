@@ -9,8 +9,12 @@
 #include <stdio.h>
 
 #ifdef _WIN32
-#include <windows.h>
-#include <process.h>
+#	define WIN32_MEAN_AND_LEAN
+#	include <windows.h>
+#	include <process.h>
+
+typedef HANDLE _ProcessId;
+typedef HANDLE _FileHandle;
 
 struct dirent
 {
@@ -55,7 +59,7 @@ struct dirent* readdir(struct DIR* dirp)
 
 	if (dirp->dirent == NULL)
 	{
-		dirp->dirent = (struct dirent*)malloc(sizoef(struct dirent));
+		dirp->dirent = (struct dirent*)malloc(sizeof(struct dirent));
 	}
 	else
 	{
@@ -89,13 +93,13 @@ LPSTR _lastErrorAsString(void)
 	assert(errorMessageId != 0);
 	LPSTR messageBuffer = NULL;
 
-	DWORD size =
+	// DWORD size =
 		FormatMessage(
-			FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, // DWORD   dwFlags,
+			FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 			NULL,
 			errorMessageId,
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			(LPSTR) &messageBuffer,
+			(LPSTR)&messageBuffer,
 			0,
 			NULL
 		);
@@ -108,6 +112,9 @@ LPSTR _lastErrorAsString(void)
 #	include <sys/wait.h>
 #	include <unistd.h>
 #	include <dirent.h>
+
+typedef pid_t _ProcessId;
+typedef int _FileHandle;
 #endif
 
 
@@ -254,24 +261,24 @@ void _RBMM_destroyRegion()
 #	define STDERR stderr
 #endif
 
-#ifndef TRACE
-#	define TRACE "[TRACE]:"
+#ifndef CBUILD_TRACE
+#	define CBUILD_TRACE "[CBUILD_TRACE]:"
 #endif
 
-#ifndef INFO
-#	define INFO "[\033[1;32mINFO\033[0m]:"
+#ifndef CBUILD_INFO
+#	define CBUILD_INFO "[\033[1;32mINFO\033[0m]:"
 #endif
 
-#ifndef WARNING
-#	define WARNING "[\033[1;33mWARNING\033[0m]:"
+#ifndef CBUILD_WARNING
+#	define CBUILD_WARNING "[\033[1;33mWARNING\033[0m]:"
 #endif
 
-#ifndef ERROR
-#	define ERROR "[\033[1;31mERROR\033[0m]:"
+#ifndef CBUILD_ERROR
+#	define CBUILD_ERROR "[\033[1;31mERROR\033[0m]:"
 #endif
 
-#ifndef BOLD
-#	define BOLD(string) "\033[1m"string"\033[0m"
+#ifndef CBUILD_BOLD
+#	define CBUILD_BOLD(string) "\033[1m"string"\033[0m"
 #endif
 
 #ifndef ECHO
@@ -365,7 +372,7 @@ const char* _shift(int* argc, char*** argv);
 #	define FOREACH_FILE_IN_DIRECTORY(file, directory, body) \
 	{ \
 		struct dirent* dp = NULL; \
-		DIR* dir = opendir(directory); \
+		struct DIR* dir = opendir(directory); \
 		 \
 		while ((dp = readdir(dir))) \
 		{ \
@@ -531,7 +538,7 @@ void _mv(const char* const source, const char* const destination);
 #ifndef MV
 #	define MV(source, destination) \
 	{ \
-		INTERNAL_ECHO(stdout, "["BOLD("MV")"]: %s -> %s\n", source, destination); \
+		INTERNAL_ECHO(stdout, "["CBUILD_BOLD("MV")"]: %s -> %s\n", source, destination); \
 		_mv(source, destination); \
 		INTERNAL_ECHO(stdout, "\n"); \
 	}
@@ -572,7 +579,7 @@ void _mkdir(int ignore, ...);
 #ifndef MKDIR
 #	define MKDIR(...) \
 	{ \
-		INTERNAL_ECHO(stdout, "["BOLD("MKDIR")"]: %s\n", JOIN(PATH_SEPARATOR, __VA_ARGS__)); \
+		INTERNAL_ECHO(stdout, "["CBUILD_BOLD("MKDIR")"]: %s\n", JOIN(PATH_SEPARATOR, __VA_ARGS__)); \
 		_mkdir(0, __VA_ARGS__, NULL); \
 		INTERNAL_ECHO(stdout, "\n"); \
 	}
@@ -611,7 +618,7 @@ void _rm(const char* const path);
 #ifndef RM
 #	define RM(path) \
 	{ \
-		INTERNAL_ECHO(stdout, "["BOLD("RM")"]: %s\n", path); \
+		INTERNAL_ECHO(stdout, "["CBUILD_BOLD("RM")"]: %s\n", path); \
 		_rm(path); \
 		INTERNAL_ECHO(stdout, "\n"); \
 	}
@@ -652,7 +659,7 @@ void _cmd(int ignore, ...);
 #ifndef CMD
 #	define CMD(...) \
 	{ \
-		INTERNAL_ECHO(stdout, "["BOLD("CMD")"]: %s\n", JOIN(" ", __VA_ARGS__)); \
+		INTERNAL_ECHO(stdout, "["CBUILD_BOLD("CMD")"]: %s\n", JOIN(" ", __VA_ARGS__)); \
 		_cmd(0, __VA_ARGS__, NULL); \
 		INTERNAL_ECHO(stdout, "\n"); \
 	}
@@ -663,9 +670,6 @@ void _cmd(int ignore, ...);
  */
 
 
-
-// Undocummented:
-// TODO: Document!
 
 /**
  * @addtogroup SELFBUILDER
@@ -769,8 +773,7 @@ const char* _join(const char* const separator, ...)
 int _exists(const char* const path)
 {
 #ifdef _WIN32
-	DWORD dwAttrib = GetFileAttributes(path);
-	return (dwAttrib != INVALID_FILE_ATTRIBUTES);
+	assert(!"TODO: implement _exists with Windows WIN32 API!");
 #else
 	struct stat statbuf;
 
@@ -782,7 +785,7 @@ int _exists(const char* const path)
 			return 0;
 		}
 
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not retrieve information about path %s: %s", path, strerror(errno));
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not retrieve information about path %s: %s", path, strerror(errno));
 		exit(1);
 	}
 
@@ -793,8 +796,7 @@ int _exists(const char* const path)
 int _isdir(const char* const path)
 {
 #ifdef _WIN32
-	DWORD dwAttrib = GetFileAttributes(path);
-	return (dwAttrib != INVALID_FILE_ATTRIBUTES && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+	assert(!"TODO: implement _isdir with Windows WIN32 API!");
 #else
 	struct stat statbuf;
 
@@ -806,7 +808,7 @@ int _isdir(const char* const path)
 			return 0;
 		}
 
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not retrieve information about file %s: %s", path, strerror(errno));
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not retrieve information about file %s: %s", path, strerror(errno));
 		exit(1);
 	}
 
@@ -817,15 +819,11 @@ int _isdir(const char* const path)
 void _mv(const char* const source, const char* const destination)
 {
 #ifdef _WIN32
-	if (!MoveFileEx(source, destination, MOVEFILE_REPLACE_EXISTING))
-	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not move %s to %s: %s\n", source, destination, _lastErrorAsString());
-		exit(1);
-	}
+	assert(!"TODO: implement _mv with Windows WIN32 API!");
 #else
 	if (rename(source, destination) < 0)
 	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not move %s to %s: %s\n", source, destination, strerror(errno));
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not move %s to %s: %s\n", source, destination, strerror(errno));
 		exit(1);
 	}
 #endif
@@ -833,6 +831,9 @@ void _mv(const char* const source, const char* const destination)
 
 void _mkdir(int ignore, ...)
 {
+#ifdef _WIN32
+	assert(!"TODO: implement _mkdir with Windows WIN32 API!");
+#else
 	signed long long separatorsCount = -1;
 	unsigned long long length = 0;
 	va_list args;
@@ -865,21 +866,25 @@ void _mkdir(int ignore, ...)
 		{
 			if (errno == EEXIST)
 			{
-				INTERNAL_ECHO(stderr, " -- "WARNING" Directory %s already exists\n", buffer);
+				INTERNAL_ECHO(stderr, " -- "CBUILD_WARNING" Directory %s already exists\n", buffer);
 			}
 			else
 			{
-				INTERNAL_ECHO(stderr, " -- "ERROR" Could not create directoy %s: %s\n", buffer, strerror(errno));
+				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not create directoy %s: %s\n", buffer, strerror(errno));
 				exit(1);
 			}
 		}
 	});
 
 	free(buffer);
+#endif
 }
 
 void _rm(const char* const path)
 {
+#ifdef _WIN32
+	assert(!"TODO: implement _rm with Windows WIN32 API!");
+#else
 	if (_isdir(path))
 	{
 		FOREACH_FILE_IN_DIRECTORY(file, path,
@@ -893,11 +898,11 @@ void _rm(const char* const path)
 			if (errno == ENOENT)
 			{
 				errno = 0;
-				INTERNAL_ECHO(stderr, " -- "WARNING" Directory %s does not exist!\n", path);
+				INTERNAL_ECHO(stderr, " -- "CBUILD_WARNING" Directory %s does not exist!\n", path);
 			}
 			else
 			{
-				INTERNAL_ECHO(stderr, " -- "ERROR" Could not remove directory %s: %s\n", path, strerror(errno));
+				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not remove directory %s: %s\n", path, strerror(errno));
 				exit(1);
 			}
 		}
@@ -909,19 +914,23 @@ void _rm(const char* const path)
 			if (errno == ENOENT)
 			{
 				errno = 0;
-				INTERNAL_ECHO(stderr, " -- "WARNING" File %s does not exist!\n", path);
+				INTERNAL_ECHO(stderr, " -- "CBUILD_WARNING" File %s does not exist!\n", path);
 			}
 			else
 			{
-				INTERNAL_ECHO(stderr, " -- "ERROR" Could not remove file %s: %s", path, strerror(errno));
+				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not remove file %s: %s", path, strerror(errno));
 				exit(1);
 			}
 		}
 	}
+#endif
 }
 
 void _cmd(int ignore, ...)
 {
+#ifdef _WIN32
+	assert(!"TODO: implement _cmd with Windows WIN32 API!");
+#else
 	unsigned long long argc = 0;
 	va_list args;
 
@@ -941,27 +950,11 @@ void _cmd(int ignore, ...)
 
 	argv[argc] = NULL;
 	assert(argc >= 1);
-
-#ifdef _WIN32
-	intprt_t status = _spawnvp(_P_WAIT, argv[0], (char* const *)argv);
-
-	if (status < 0)
-	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not execute child process: %s\n", _lastErrorAsString());
-		exit(1);
-	}
-
-	if (status > 0)
-	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Child process exited with %d code\n", status);
-		exit(1);
-	}
-#else
-	pid_t childProcessId = fork();
+	_ProcessId childProcessId = fork();
 
 	if (childProcessId == -1)
 	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not fork child process: %s\n", strerror(errno));
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not fork child process: %s\n", strerror(errno));
 		exit(1);
 	}
 
@@ -969,7 +962,7 @@ void _cmd(int ignore, ...)
 	{
 		if (execvp(argv[0], (char* const *)argv) < 0)
 		{
-			INTERNAL_ECHO(stderr, " -- "ERROR" Could not execute child process: %s\n", strerror(errno));
+			INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not execute child process: %s\n", strerror(errno));
 			exit(1);
 		}
 	}
@@ -986,7 +979,7 @@ void _cmd(int ignore, ...)
 
 				if (exitStatus != 0)
 				{
-					INTERNAL_ECHO(stderr, " -- "ERROR" Child process exited with %d code\n", exitStatus);
+					INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Child process exited with %d code\n", exitStatus);
 					exit(1);
 				}
 
@@ -995,34 +988,34 @@ void _cmd(int ignore, ...)
 
 			if (WIFSIGNALED(status))
 			{
-				INTERNAL_ECHO(stderr, " -- "ERROR" Child process was terminated by %d signal\n", WTERMSIG(status));
+				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Child process was terminated by %d signal\n", WTERMSIG(status));
 				exit(1);
 			}
 		}
 	}
-#endif
 
 	free(argv);
+#endif
 }
 
 int _isCBuildModified(const char* sourcePath, const char* binaryPath)
 {
 #ifdef _WIN32
 	FILETIME path1_time, path2_time;
-	Fd path1_fd = fd_open_for_read(sourcePath);
+	_FileHandle path1_fd = fd_open_for_read(sourcePath);
 
 	if (!GetFileTime(path1_fd, NULL, NULL, &path1_time))
 	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not get time of %s: %s\n", sourcePath, _lastErrorAsString());
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not get time of %s: %s\n", sourcePath, _lastErrorAsString());
 		exit(1);
 	}
 
 	fd_close(path1_fd);
-	Fd path2_fd = fd_open_for_read(binaryPath);
+	_FileHandle path2_fd = fd_open_for_read(binaryPath);
 
 	if (!GetFileTime(path2_fd, NULL, NULL, &path2_time))
 	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not get time of %s: %s\n", binaryPath, _lastErrorAsString());
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not get time of %s: %s\n", binaryPath, _lastErrorAsString());
 		exit(1);
 	}
 
@@ -1033,7 +1026,7 @@ int _isCBuildModified(const char* sourcePath, const char* binaryPath)
 
 	if (stat(sourcePath, &statbuf) < 0)
 	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not stat %s: %s\n", sourcePath, strerror(errno));
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not stat %s: %s\n", sourcePath, strerror(errno));
 		exit(1);
 	}
 
@@ -1041,7 +1034,7 @@ int _isCBuildModified(const char* sourcePath, const char* binaryPath)
 
 	if (stat(binaryPath, &statbuf) < 0)
 	{
-		INTERNAL_ECHO(stderr, " -- "ERROR" Could not stat %s: %s\n", binaryPath, strerror(errno));
+		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not stat %s: %s\n", binaryPath, strerror(errno));
 		exit(1);
 	}
 
@@ -1054,7 +1047,7 @@ void _rebuildMyself(const char* const sourcePath, const char* const binaryPath)
 {
 	if (_isCBuildModified(sourcePath, binaryPath))
 	{
-		INTERNAL_ECHO(stdout, INFO" Rebuilding CBUILD!\n");
+		INTERNAL_ECHO(stdout, CBUILD_INFO" Rebuilding CBUILD!\n");
 		MV(binaryPath, CONCAT(binaryPath, ".old"));
 		BUILD_MYSELF(binaryPath, sourcePath);
 		RM(CONCAT(binaryPath, ".old"));

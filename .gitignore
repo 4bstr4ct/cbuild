@@ -56,3 +56,5 @@ dkms.conf
 *helpers
 *build
 *config
+*.vscode
+*.vs
