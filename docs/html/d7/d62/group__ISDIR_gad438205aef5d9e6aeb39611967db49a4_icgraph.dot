@@ -7,6 +7,8 @@ digraph "_isdir"
   rankdir="RL";
   Node1 [label="_isdir",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Checks if path is a directory or not."];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="_rm",height=0.2,width=0.4,color="black",URL="$d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5",tooltip="Removes a file of directory with all it's subdirectories and files."];
-  Node2 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="_exists",height=0.2,width=0.4,color="black",URL="$da/dbd/group__EXISTS.html#ga8c86753b6958c6956a8415a564aadac8",tooltip="Chesks if provided path exists ir not."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="_rm",height=0.2,width=0.4,color="black",URL="$d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5",tooltip=" "];
+  Node3 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

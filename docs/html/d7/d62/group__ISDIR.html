@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('d7/d62/group__ISDIR.html','../../'); i
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaa58ff948e997bee3c7393ed422f2a556"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d62/group__ISDIR.html#gaa58ff948e997bee3c7393ed422f2a556">ISDIR</a>(path)</td></tr>
+<tr class="memitem:gaa58ff948e997bee3c7393ed422f2a556"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d62/group__ISDIR.html#gaa58ff948e997bee3c7393ed422f2a556">ISDIR</a>(path)&#160;&#160;&#160;<a class="el" href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a>(path)</td></tr>
 <tr class="memdesc:gaa58ff948e997bee3c7393ed422f2a556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps <a class="el" href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a> function.  <a href="../../d7/d62/group__ISDIR.html#gaa58ff948e997bee3c7393ed422f2a556">More...</a><br /></td></tr>
 <tr class="separator:gaa58ff948e997bee3c7393ed422f2a556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -126,18 +126,15 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">path</td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;<a class="el" href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a>(path)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    ( \</div>
-<div class="line">        _isdir(path) \</div>
-<div class="line">    )</div>
-</div><!-- fragment -->
+
 <p>Wraps <a class="el" href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a> function. </p>
 <div class="fragment"><div class="line"><span class="keywordtype">bool</span> is = <a class="code hl_define" href="../../d7/d62/group__ISDIR.html#gaa58ff948e997bee3c7393ed422f2a556">ISDIR</a>(<a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;folder2&quot;</span>));</div>
-<div class="ttc" id="agroup__ISDIR_html_gaa58ff948e997bee3c7393ed422f2a556"><div class="ttname"><a href="../../d7/d62/group__ISDIR.html#gaa58ff948e997bee3c7393ed422f2a556">ISDIR</a></div><div class="ttdeci">#define ISDIR(path)</div><div class="ttdoc">Wraps _isdir function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:481</div></div>
-<div class="ttc" id="agroup__STRUTILS_html_ga1a13fd58ba8d3b04c7815fc9c2c056e0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a></div><div class="ttdeci">#define PATH(...)</div><div class="ttdoc">Wraps JOIN macro with predefined PATH_SEPARATOR macro.</div><div class="ttdef"><b>Definition:</b> cbuild.h:384</div></div>
+<div class="ttc" id="agroup__ISDIR_html_gaa58ff948e997bee3c7393ed422f2a556"><div class="ttname"><a href="../../d7/d62/group__ISDIR.html#gaa58ff948e997bee3c7393ed422f2a556">ISDIR</a></div><div class="ttdeci">#define ISDIR(path)</div><div class="ttdoc">Wraps _isdir function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:330</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_ga1a13fd58ba8d3b04c7815fc9c2c056e0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a></div><div class="ttdeci">#define PATH(...)</div><div class="ttdoc">Wraps JOIN macro with predefined PATH_SEPARATOR macro.</div><div class="ttdef"><b>Definition:</b> cbuild.h:246</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -161,7 +158,7 @@ Functions</h2></td></tr>
 <p>Checks if path is a directory or not. </p>
 <p >Path must be correctly formatted, and can be provided with <a class="el" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a> macro.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">bool</span> is = <a class="code hl_function" href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a>(<a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;folder2&quot;</span>));</div>
-<div class="ttc" id="agroup__ISDIR_html_gad438205aef5d9e6aeb39611967db49a4"><div class="ttname"><a href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a></div><div class="ttdeci">int _isdir(const char *const path)</div><div class="ttdoc">Checks if path is a directory or not.</div><div class="ttdef"><b>Definition:</b> cbuild.h:450</div></div>
+<div class="ttc" id="agroup__ISDIR_html_gad438205aef5d9e6aeb39611967db49a4"><div class="ttname"><a href="../../d7/d62/group__ISDIR.html#gad438205aef5d9e6aeb39611967db49a4">_isdir</a></div><div class="ttdeci">int _isdir(const char *const path)</div><div class="ttdoc">Checks if path is a directory or not.</div><div class="ttdef"><b>Definition:</b> cbuild.h:311</div></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">

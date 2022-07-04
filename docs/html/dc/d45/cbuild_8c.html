@@ -112,6 +112,12 @@ Include dependency graph for cbuild.c:</div>
 Macros</h2></td></tr>
 <tr class="memitem:a2758560787fe89889c24e676db765a45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d45/cbuild_8c.html#a2758560787fe89889c24e676db765a45">CBUILD_IMPLEMENTATION</a></td></tr>
 <tr class="separator:a2758560787fe89889c24e676db765a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ba59ae2c88202e53adea0d637b0507c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d45/cbuild_8c.html#a3ba59ae2c88202e53adea0d637b0507c">TEST_BOOL</a>(expression,  label)</td></tr>
+<tr class="separator:a3ba59ae2c88202e53adea0d637b0507c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae48d413a91a32a59c8e40c30a9c38678"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d45/cbuild_8c.html#ae48d413a91a32a59c8e40c30a9c38678">TEST_VOID</a>(expression,  label)</td></tr>
+<tr class="separator:ae48d413a91a32a59c8e40c30a9c38678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5666ac5930c9f903698073ab1fa694f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d45/cbuild_8c.html#a5666ac5930c9f903698073ab1fa694f7">PAUSE</a>&#160;&#160;&#160;{ int c = getchar(); }</td></tr>
+<tr class="separator:a5666ac5930c9f903698073ab1fa694f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -133,6 +139,85 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<a id="a5666ac5930c9f903698073ab1fa694f7" name="a5666ac5930c9f903698073ab1fa694f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5666ac5930c9f903698073ab1fa694f7">&#9670;&nbsp;</a></span>PAUSE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PAUSE&#160;&#160;&#160;{ int c = getchar(); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3ba59ae2c88202e53adea0d637b0507c" name="a3ba59ae2c88202e53adea0d637b0507c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ba59ae2c88202e53adea0d637b0507c">&#9670;&nbsp;</a></span>TEST_BOOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_BOOL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expression, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">label&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">{ \</div>
+<div class="line">    fprintf(stdout, <span class="stringliteral">&quot;%s\n&quot;</span>, label); \</div>
+<div class="line">    fprintf(stdout, <span class="stringliteral">&quot;%s =&gt; %d\n\n&quot;</span>, #expression, expression); \</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae48d413a91a32a59c8e40c30a9c38678" name="ae48d413a91a32a59c8e40c30a9c38678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae48d413a91a32a59c8e40c30a9c38678">&#9670;&nbsp;</a></span>TEST_VOID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_VOID</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expression, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">label&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">{ \</div>
+<div class="line">    fprintf(stdout, <span class="stringliteral">&quot;%s\n&quot;</span>, label); \</div>
+<div class="line">    fprintf(stdout, <span class="stringliteral">&quot;%s\n\n&quot;</span>, #expression); \</div>
+<div class="line">    expression; \</div>
+<div class="line">}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>

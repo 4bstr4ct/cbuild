@@ -103,14 +103,13 @@ $(document).ready(function(){initNavTree('d5/d04/group__RM.html','../../'); init
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga23746d9168ce2722bef89fabac21d1ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">RM</a>(path)</td></tr>
+<tr class="memitem:ga23746d9168ce2722bef89fabac21d1ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">RM</a>(path)&#160;&#160;&#160;<a class="el" href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a>(path)</td></tr>
 <tr class="memdesc:ga23746d9168ce2722bef89fabac21d1ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps <a class="el" href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a> function.  <a href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">More...</a><br /></td></tr>
 <tr class="separator:ga23746d9168ce2722bef89fabac21d1ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga35042f1b0d577d4cfcf8fd97b229d4b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a> (const char *const path)</td></tr>
-<tr class="memdesc:ga35042f1b0d577d4cfcf8fd97b229d4b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a file of directory with all it's subdirectories and files.  <a href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">More...</a><br /></td></tr>
 <tr class="separator:ga35042f1b0d577d4cfcf8fd97b229d4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -126,21 +125,15 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">path</td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;<a class="el" href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a>(path)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    { \</div>
-<div class="line">        INTERNAL_ECHO(stdout, <span class="stringliteral">&quot;[&quot;</span><a class="code hl_define" href="../../dc/dda/cbuild_8h.html#a991586f7242a25c7046964d85f40d937">CBUILD_BOLD</a>(<span class="stringliteral">&quot;RM&quot;</span>)<span class="stringliteral">&quot;]: %s\n&quot;</span>, path); \</div>
-<div class="line">        _rm(path); \</div>
-<div class="line">        INTERNAL_ECHO(stdout, <span class="stringliteral">&quot;\n&quot;</span>); \</div>
-<div class="line">    }</div>
-<div class="ttc" id="acbuild_8h_html_a991586f7242a25c7046964d85f40d937"><div class="ttname"><a href="../../dc/dda/cbuild_8h.html#a991586f7242a25c7046964d85f40d937">CBUILD_BOLD</a></div><div class="ttdeci">#define CBUILD_BOLD(string)</div><div class="ttdef"><b>Definition:</b> cbuild.h:193</div></div>
-</div><!-- fragment -->
+
 <p>Wraps <a class="el" href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a> function. </p>
-<div class="fragment"><div class="line"><a class="code hl_define" href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">RM</a>(<a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;file.txt&quot;</span>));</div>
-<div class="ttc" id="agroup__RM_html_ga23746d9168ce2722bef89fabac21d1ec"><div class="ttname"><a href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">RM</a></div><div class="ttdeci">#define RM(path)</div><div class="ttdoc">Wraps _rm function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:757</div></div>
-<div class="ttc" id="agroup__STRUTILS_html_ga1a13fd58ba8d3b04c7815fc9c2c056e0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a></div><div class="ttdeci">#define PATH(...)</div><div class="ttdoc">Wraps JOIN macro with predefined PATH_SEPARATOR macro.</div><div class="ttdef"><b>Definition:</b> cbuild.h:384</div></div>
+<div class="fragment"><div class="line"><a class="code hl_define" href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">RM</a>(<a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;file.txt&quot;</span>));</div>
+<div class="ttc" id="agroup__RM_html_ga23746d9168ce2722bef89fabac21d1ec"><div class="ttname"><a href="../../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec">RM</a></div><div class="ttdeci">#define RM(path)</div><div class="ttdoc">Wraps _rm function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:653</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_ga1a13fd58ba8d3b04c7815fc9c2c056e0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a></div><div class="ttdeci">#define PATH(...)</div><div class="ttdoc">Wraps JOIN macro with predefined PATH_SEPARATOR macro.</div><div class="ttdef"><b>Definition:</b> cbuild.h:246</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -160,12 +153,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Removes a file of directory with all it's subdirectories and files. </p>
-<p >Path must be correctly formatted, and can be provided with <a class="el" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a> macro.</p>
-<div class="fragment"><div class="line"><a class="code hl_function" href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a>(<a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;file.txt&quot;</span>));</div>
-<div class="ttc" id="agroup__RM_html_ga35042f1b0d577d4cfcf8fd97b229d4b5"><div class="ttname"><a href="../../d5/d04/group__RM.html#ga35042f1b0d577d4cfcf8fd97b229d4b5">_rm</a></div><div class="ttdeci">void _rm(const char *const path)</div><div class="ttdoc">Removes a file of directory with all it's subdirectories and files.</div><div class="ttdef"><b>Definition:</b> cbuild.h:703</div></div>
-</div><!-- fragment --> <div class="dynheader">
+<div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><!-- SVG 0 -->

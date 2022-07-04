@@ -103,6 +103,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 Builds situation</h1>
 <p >Currently tool:</p><ol type="1">
 <li>Passed on <a href="https://getfedora.org/en/silverblue/">Fedora Silverblue 36</a> GCC</li>
+<li>Passed on Windows 10 MinGW-GCC</li>
 <li>Failed on Windows 10 MSVC</li>
 <li>Was not tested on anything else</li>
 </ol>
@@ -121,7 +122,7 @@ How to</h1>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aCMakeCCompilerId_8c_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="d9/d4b/CMakeCCompilerId_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> CMakeCCompilerId.c:801</div></div>
-<div class="ttc" id="agroup__SELFBUILDER_html_ga7860f249b31242a704f5fef5e88d719d"><div class="ttname"><a href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d">REBUILD_MYSELF</a></div><div class="ttdeci">#define REBUILD_MYSELF(program)</div><div class="ttdoc">Wraps _rebuildMyself function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:1005</div></div>
+<div class="ttc" id="agroup__SELFBUILDER_html_ga7860f249b31242a704f5fef5e88d719d"><div class="ttname"><a href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d">REBUILD_MYSELF</a></div><div class="ttdeci">#define REBUILD_MYSELF(program)</div><div class="ttdoc">Wraps _rebuildMyself function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:905</div></div>
 </div><!-- fragment --><p >The initial run will require to build the tool, but after that, the tool will rebuild itself, if any changes are made in the .c file. The steps of workign with the tool are:</p><ol type="1">
 <li>Create a <a class="el" href="dc/d45/cbuild_8c.html">cbuild.c</a> file and implement your build configuration in it using <a class="el" href="dc/dda/cbuild_8h.html">cbuild.h</a> utilities and functions.</li>
 <li>Build the tool using any C compiler you have.</li>
@@ -140,7 +141,7 @@ And on Linux:</h2>
 </div><!-- fragment --><p >You can check out the (<a class="el" href="dc/d45/cbuild_8c.html">cbuild.c</a>)[./cbuild.c] file to get the general idea of how cbuil.h is used.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Warning</h1>
-<p >This is yet an experimental tool and has a very basic set of utilities. It currently does not provide functions for including directories for a target, linking etc. Also, this whole tool is a giant memory leak! Memory managment will be added in the next patch.</p>
+<p >This is yet an experimental tool and has a very basic set of utilities. It currently does not provide functions for including directories for a target, linking etc. However, linking could be implemented using CMD call as a terminal command which would use a linker of a compiler to perform this task. Also, this whole tool is a giant memory leak! Memory managment will be added in the next patch.</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
 Thanks note</h1>
 <p >Thanks to <a href="https://www.youtube.com/c/TsodingDaily">Tsoding</a> for inspiration and sources for such project. Especially for explaining the Windows side of the implementation in one of his videos! </p>

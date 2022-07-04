@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['path_0',['PATH',['../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0',1,'cbuild.h']]],
-  ['path_5fseparator_1',['PATH_SEPARATOR',['../dc/dda/cbuild_8h.html#a256a5721249aa3309437212cc21a9fe4',1,'cbuild.h']]],
-  ['path_5fseparator_5flength_2',['PATH_SEPARATOR_LENGTH',['../dc/dda/cbuild_8h.html#a838a7df9dc51ec2edccd10a32f5d6f02',1,'cbuild.h']]],
-  ['platform_5fid_3',['PLATFORM_ID',['../d9/d4b/CMakeCCompilerId_8c.html#adbc5372f40838899018fadbc89bd588b',1,'CMakeCCompilerId.c']]]
+  ['selfbuilder_0',['SELFBUILDER',['../d0/dc7/group__SELFBUILDER.html',1,'']]],
+  ['streql_1',['STREQL',['../dc/dda/cbuild_8h.html#ab62a101e64c6b815cd42a3b23affc20d',1,'cbuild.h']]],
+  ['stringify_2',['STRINGIFY',['../d9/d4b/CMakeCCompilerId_8c.html#a43e1cad902b6477bec893cb6430bd6c8',1,'CMakeCCompilerId.c']]],
+  ['stringify_5fhelper_3',['STRINGIFY_HELPER',['../d9/d4b/CMakeCCompilerId_8c.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d',1,'CMakeCCompilerId.c']]],
+  ['strutils_4',['STRUTILS',['../d5/d3f/group__STRUTILS.html',1,'']]]
 ];

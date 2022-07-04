@@ -27,4 +27,6 @@ digraph "cbuild.h"
   Node11 [label="unistd.h",height=0.2,width=0.4,color="grey75",tooltip=" "];
   Node1 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node12 [label="dirent.h",height=0.2,width=0.4,color="grey75",tooltip=" "];
+  Node1 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="fcntl.h",height=0.2,width=0.4,color="grey75",tooltip=" "];
 }
