@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['path_5fseparator_0',['PATH_SEPARATOR',['../dc/dda/cbuild_8h.html#a256a5721249aa3309437212cc21a9fe4',1,'cbuild.h']]],
-  ['path_5fseparator_5flength_1',['PATH_SEPARATOR_LENGTH',['../dc/dda/cbuild_8h.html#a838a7df9dc51ec2edccd10a32f5d6f02',1,'cbuild.h']]]
+  ['ignore_5fif_5fdots_0',['IGNORE_IF_DOTS',['../dc/dda/cbuild_8h.html#a4f1783cf089adf9faf7a2dc332bb7df8',1,'cbuild.h']]],
+  ['internal_5fecho_1',['INTERNAL_ECHO',['../dc/dda/cbuild_8h.html#aeedbd2f4572d45a0e303d2fe9024bd4a',1,'cbuild.h']]]
 ];

@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">cbuild </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_readme"></a> Header-only, self-hosting library for creating build configurations for any type of projects. It is a <a href="https://github.com/nothings/stb/blob/master/docs/stb_howto.txt">stb-style</a> single header library, which means, it does not include implementations by default.</p>
+<div class="textblock"><p ><a class="anchor" id="md_readme"></a> Header-only, self-hosting library for creating build configurations for any type of projects.</p>
 <p >The library provides utilities and functions to manipulate files, directories, and commands to create customized project building configurations.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Builds situation</h1>
@@ -114,14 +114,14 @@ How to</h1>
 </div><!-- fragment --><p >By default cbuild will log many building steps to the console. This can be disabled by defining CBUILD_NOECHO macro before the include of the cbuild header: </p><div class="fragment"><div class="line"><span class="preprocessor">#define CBUILD_IMPLEMENTATION</span></div>
 <div class="line"><span class="preprocessor">#define CBUILD_NOECHO</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="dc/dda/cbuild_8h.html">cbuild.h</a>&quot;</span></div>
-</div><!-- fragment --><p >For self-hosting, you must use <a class="el" href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d" title="Wraps _rebuildMyself function.">REBUILD_MYSELF(program)</a> macro. In <a href="./cbuild.c">cbuild.c</a> file there is an example of how this macro is used. Program here is a path to the tool executable. Here is a snip of the example: </p><div class="fragment"><div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="dc/d45/cbuild_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
+</div><!-- fragment --><p >For self-hosting, you must use <a class="el" href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d" title="Wraps _rebuildMyself function.">REBUILD_MYSELF(program)</a> macro. In <a href="./cbuild.c">cbuild.c</a> file there is an example of how this macro is used. Program here is a path to the tool executable. Here is a snip of the example: </p><div class="fragment"><div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="d9/d4b/CMakeCCompilerId_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
 <div class="line">    <a class="code hl_define" href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d">REBUILD_MYSELF</a>(argv[0]);</div>
 <div class="line">    <span class="comment">// Do the build configuration logic here...</span></div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="acbuild_8c_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="dc/d45/cbuild_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> cbuild.c:54</div></div>
-<div class="ttc" id="agroup__SELFBUILDER_html_ga7860f249b31242a704f5fef5e88d719d"><div class="ttname"><a href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d">REBUILD_MYSELF</a></div><div class="ttdeci">#define REBUILD_MYSELF(program)</div><div class="ttdoc">Wraps _rebuildMyself function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:572</div></div>
+<div class="ttc" id="aCMakeCCompilerId_8c_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="d9/d4b/CMakeCCompilerId_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> CMakeCCompilerId.c:801</div></div>
+<div class="ttc" id="agroup__SELFBUILDER_html_ga7860f249b31242a704f5fef5e88d719d"><div class="ttname"><a href="d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d">REBUILD_MYSELF</a></div><div class="ttdeci">#define REBUILD_MYSELF(program)</div><div class="ttdoc">Wraps _rebuildMyself function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:1005</div></div>
 </div><!-- fragment --><p >The initial run will require to build the tool, but after that, the tool will rebuild itself, if any changes are made in the .c file. The steps of workign with the tool are:</p><ol type="1">
 <li>Create a <a class="el" href="dc/d45/cbuild_8c.html">cbuild.c</a> file and implement your build configuration in it using <a class="el" href="dc/dda/cbuild_8h.html">cbuild.h</a> utilities and functions.</li>
 <li>Build the tool using any C compiler you have.</li>

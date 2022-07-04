@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['or_0',['OR',['../dc/dda/cbuild_8h.html#a3363ca4d6d3cc0230b2804280591c991',1,'cbuild.h']]]
+  ['join_0',['JOIN',['../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f',1,'cbuild.h']]]
 ];

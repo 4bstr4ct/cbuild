@@ -139,7 +139,7 @@ Functions</h2></td></tr>
 
 <p>Wraps <a class="el" href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a> macro with predefined separator to an empty string (""). </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* result = <a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga770b921e59b3151931ee939a1ecf450e">CONCAT</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;something&quot;</span>, <span class="stringliteral">&quot;rock.rc&quot;</span>);</div>
-<div class="ttc" id="agroup__STRUTILS_html_ga770b921e59b3151931ee939a1ecf450e"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga770b921e59b3151931ee939a1ecf450e">CONCAT</a></div><div class="ttdeci">#define CONCAT(...)</div><div class="ttdoc">Wraps JOIN macro with predefined separator to an empty string (&quot;&quot;).</div><div class="ttdef"><b>Definition:</b> cbuild.h:279</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_ga770b921e59b3151931ee939a1ecf450e"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga770b921e59b3151931ee939a1ecf450e">CONCAT</a></div><div class="ttdeci">#define CONCAT(...)</div><div class="ttdoc">Wraps JOIN macro with predefined separator to an empty string (&quot;&quot;).</div><div class="ttdef"><b>Definition:</b> cbuild.h:373</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -171,7 +171,7 @@ Functions</h2></td></tr>
 
 <p>Wraps <a class="el" href="../../d5/d3f/group__STRUTILS.html#gabf94e86b51226a39fceda63c336e83d0">_join</a> function. </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* result = <a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a>(<span class="stringliteral">&quot;%&quot;</span>, <span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;something&quot;</span>, <span class="stringliteral">&quot;rock.rc&quot;</span>);</div>
-<div class="ttc" id="agroup__STRUTILS_html_ga937a63ddada05a4d408ea4b3ec34201f"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a></div><div class="ttdeci">#define JOIN(separator,...)</div><div class="ttdoc">Wraps _join function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:268</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_ga937a63ddada05a4d408ea4b3ec34201f"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a></div><div class="ttdeci">#define JOIN(separator,...)</div><div class="ttdoc">Wraps _join function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:362</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -193,7 +193,7 @@ Functions</h2></td></tr>
 
 <p>Wraps <a class="el" href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a> macro with predefined <a class="el" href="../../dc/dda/cbuild_8h.html#a256a5721249aa3309437212cc21a9fe4">PATH_SEPARATOR</a> macro. </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* result = <a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a>(<span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;something&quot;</span>, <span class="stringliteral">&quot;rock.rc&quot;</span>);</div>
-<div class="ttc" id="agroup__STRUTILS_html_ga1a13fd58ba8d3b04c7815fc9c2c056e0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a></div><div class="ttdeci">#define PATH(...)</div><div class="ttdoc">Wraps JOIN macro with predefined PATH_SEPARATOR macro.</div><div class="ttdef"><b>Definition:</b> cbuild.h:290</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_ga1a13fd58ba8d3b04c7815fc9c2c056e0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0">PATH</a></div><div class="ttdeci">#define PATH(...)</div><div class="ttdoc">Wraps JOIN macro with predefined PATH_SEPARATOR macro.</div><div class="ttdef"><b>Definition:</b> cbuild.h:384</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -227,7 +227,7 @@ Functions</h2></td></tr>
 <p>Joins variadic arguments with provided separator into a single string. </p>
 <p >The variadic list must be a NULL terminated!</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* result = <a class="code hl_function" href="../../d5/d3f/group__STRUTILS.html#gabf94e86b51226a39fceda63c336e83d0">_join</a>(<span class="stringliteral">&quot;%&quot;</span>, <span class="stringliteral">&quot;folder1&quot;</span>, <span class="stringliteral">&quot;something&quot;</span>, <span class="stringliteral">&quot;rock.rc&quot;</span>, NULL);</div>
-<div class="ttc" id="agroup__STRUTILS_html_gabf94e86b51226a39fceda63c336e83d0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#gabf94e86b51226a39fceda63c336e83d0">_join</a></div><div class="ttdeci">const char * _join(const char *const separator,...)</div><div class="ttdoc">Joins variadic arguments with provided separator into a single string.</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_gabf94e86b51226a39fceda63c336e83d0"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#gabf94e86b51226a39fceda63c336e83d0">_join</a></div><div class="ttdeci">const char * _join(const char *const separator,...)</div><div class="ttdoc">Joins variadic arguments with provided separator into a single string.</div><div class="ttdef"><b>Definition:</b> cbuild.h:320</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

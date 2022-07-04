@@ -12,36 +12,41 @@ static void _usage(FILE* stream, const char* const program)
 
 int _main(const char* const program, int argc, char** argv)
 {
-	CREATE_REGION();
-	ADD_TO_REGION("path/to/something1");
-	ADD_TO_REGION("path/to/something2");
-	ADD_TO_REGION("path/to/something3");
-	DESTROY_REGION();
+	fprintf(STDOUT, "%d\n", ISFILE(PATH("examples", "test")));
+	fprintf(STDOUT, "%d\n", ISFILE(PATH("examples", "test", "something.txt")));
+	fprintf(STDOUT, "%d\n\n", ISFILE(PATH("examples", "test", "main.c")));
 
-	/*
-	MKDIR(JOIN("!", "markas", "yra", "genijus"));
+	fprintf(STDOUT, "%d\n", ISDIR(PATH("examples", "test")));
+	fprintf(STDOUT, "%d\n", ISDIR(PATH("examples", "test", "something.txt")));
+	fprintf(STDOUT, "%d\n\n", ISDIR(PATH("examples", "test", "main.c")));
+
+	fprintf(STDOUT, "%d\n", EXISTS(PATH("examples", "test")));
+	fprintf(STDOUT, "%d\n", EXISTS(PATH("examples", "test", "something.txt")));
+	fprintf(STDOUT, "%d\n\n", EXISTS(PATH("examples", "test", "main.c")));
+
 	FOREACH_ARG_CMD_ARGS(flag, argc, argv,
 	{
 		if (STREQL(flag, "--help") OR STREQL(flag, "-h"))
 		{
-			ECHO(STDOUT, INFO" Found flag %s: printing usage!\n", flag);
+			ECHO(STDOUT, CBUILD_INFO" Found flag %s: printing usage!\n", flag);
 			_usage(STDOUT, program);
 			exit(0);
 		}
 		else if (STREQL(flag, "--tests")
 		 OR STREQL(flag, "-t"))
 		{
-			ECHO(STDOUT, INFO" Found flag %s: enabling tests!\n", flag);
+			ECHO(STDOUT, CBUILD_INFO" Found flag %s: enabling tests!\n", flag);
 		}
 		else
 		{
-			ECHO(STDERR, ERROR" Found flag %s: enabling tests!\n", flag);
+			ECHO(STDERR, CBUILD_ERROR" Found flag %s: enabling tests!\n", flag);
 			_usage(STDERR, program);
 			exit(1);
 		}
 	});
 
 	MKDIR("examples", "test", "build", "bin");
+	MKFILE("examples", "test", "build", "bin", "something.txt");
 
 #if _WIN32
 	CMD("cl.exe",
@@ -54,8 +59,7 @@ int _main(const char* const program, int argc, char** argv)
 	CMD(PATH("examples", "test", "build", "bin", "main.c.out"));
 #endif
 
-	RM(PATH("examples", "test", "build", "bin"));
-	*/
+	RM(PATH("CMakeLists.txt"));
 
 	return 0;
 }

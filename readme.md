@@ -1,6 +1,6 @@
 # cbuild
 
-Header-only, self-hosting library for creating build configurations for any type of projects. It is a [stb-style](https://github.com/nothings/stb/blob/master/docs/stb_howto.txt) single header library, which means, it does not include implementations by default.
+Header-only, self-hosting library for creating build configurations for any type of projects.
 
 The library provides utilities and functions to manipulate files, directories, and commands to create customized project building configurations.
 

@@ -131,16 +131,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    { \</div>
-<div class="line">        INTERNAL_ECHO(stdout, <span class="stringliteral">&quot;[&quot;</span><a class="code hl_define" href="../../dc/dda/cbuild_8h.html#afbf085666163a9417c7a76557b258ee9">BOLD</a>(<span class="stringliteral">&quot;CMD&quot;</span>)<span class="stringliteral">&quot;]: %s\n&quot;</span>, <a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a>(<span class="stringliteral">&quot; &quot;</span>, __VA_ARGS__)); \</div>
+<div class="line">        INTERNAL_ECHO(stdout, <span class="stringliteral">&quot;[&quot;</span><a class="code hl_define" href="../../dc/dda/cbuild_8h.html#a991586f7242a25c7046964d85f40d937">CBUILD_BOLD</a>(<span class="stringliteral">&quot;CMD&quot;</span>)<span class="stringliteral">&quot;]: %s\n&quot;</span>, <a class="code hl_define" href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a>(<span class="stringliteral">&quot; &quot;</span>, __VA_ARGS__)); \</div>
 <div class="line">        _cmd(0, __VA_ARGS__, NULL); \</div>
 <div class="line">        INTERNAL_ECHO(stdout, <span class="stringliteral">&quot;\n&quot;</span>); \</div>
 <div class="line">    }</div>
-<div class="ttc" id="acbuild_8h_html_afbf085666163a9417c7a76557b258ee9"><div class="ttname"><a href="../../dc/dda/cbuild_8h.html#afbf085666163a9417c7a76557b258ee9">BOLD</a></div><div class="ttdeci">#define BOLD(string)</div><div class="ttdef"><b>Definition:</b> cbuild.h:138</div></div>
-<div class="ttc" id="agroup__STRUTILS_html_ga937a63ddada05a4d408ea4b3ec34201f"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a></div><div class="ttdeci">#define JOIN(separator,...)</div><div class="ttdoc">Wraps _join function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:268</div></div>
+<div class="ttc" id="acbuild_8h_html_a991586f7242a25c7046964d85f40d937"><div class="ttname"><a href="../../dc/dda/cbuild_8h.html#a991586f7242a25c7046964d85f40d937">CBUILD_BOLD</a></div><div class="ttdeci">#define CBUILD_BOLD(string)</div><div class="ttdef"><b>Definition:</b> cbuild.h:193</div></div>
+<div class="ttc" id="agroup__STRUTILS_html_ga937a63ddada05a4d408ea4b3ec34201f"><div class="ttname"><a href="../../d5/d3f/group__STRUTILS.html#ga937a63ddada05a4d408ea4b3ec34201f">JOIN</a></div><div class="ttdeci">#define JOIN(separator,...)</div><div class="ttdoc">Wraps _join function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:362</div></div>
 </div><!-- fragment -->
 <p>Wraps <a class="el" href="../../d2/d5c/group__CMD.html#ga1404f52ed3b51bfdd80da91a6c6da381">_cmd</a> function. </p>
 <div class="fragment"><div class="line"><a class="code hl_define" href="../../d2/d5c/group__CMD.html#ga070f893080293bab342dcf7f135ff892">CMD</a>(<span class="stringliteral">&quot;ls&quot;</span>, <span class="stringliteral">&quot;-la&quot;</span>);</div>
-<div class="ttc" id="agroup__CMD_html_ga070f893080293bab342dcf7f135ff892"><div class="ttname"><a href="../../d2/d5c/group__CMD.html#ga070f893080293bab342dcf7f135ff892">CMD</a></div><div class="ttdeci">#define CMD(...)</div><div class="ttdoc">Wraps _cmd function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:517</div></div>
+<div class="ttc" id="agroup__CMD_html_ga070f893080293bab342dcf7f135ff892"><div class="ttname"><a href="../../d2/d5c/group__CMD.html#ga070f893080293bab342dcf7f135ff892">CMD</a></div><div class="ttdeci">#define CMD(...)</div><div class="ttdoc">Wraps _cmd function.</div><div class="ttdef"><b>Definition:</b> cbuild.h:918</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -176,7 +176,7 @@ Functions</h2></td></tr>
 <div class="fragment"><div class="line"><a class="code hl_function" href="../../d2/d5c/group__CMD.html#ga1404f52ed3b51bfdd80da91a6c6da381">_cmd</a>(<span class="stringliteral">&quot;ls&quot;</span>, <span class="stringliteral">&quot;-la&quot;</span>);</div>
 <div class="line"><span class="comment">// or</span></div>
 <div class="line"><a class="code hl_function" href="../../d2/d5c/group__CMD.html#ga1404f52ed3b51bfdd80da91a6c6da381">_cmd</a>(<span class="stringliteral">&quot;ls -la&quot;</span>);</div>
-<div class="ttc" id="agroup__CMD_html_ga1404f52ed3b51bfdd80da91a6c6da381"><div class="ttname"><a href="../../d2/d5c/group__CMD.html#ga1404f52ed3b51bfdd80da91a6c6da381">_cmd</a></div><div class="ttdeci">void _cmd(int ignore,...)</div><div class="ttdoc">Calls a command line command as a child process.</div></div>
+<div class="ttc" id="agroup__CMD_html_ga1404f52ed3b51bfdd80da91a6c6da381"><div class="ttname"><a href="../../d2/d5c/group__CMD.html#ga1404f52ed3b51bfdd80da91a6c6da381">_cmd</a></div><div class="ttdeci">void _cmd(int ignore,...)</div><div class="ttdoc">Calls a command line command as a child process.</div><div class="ttdef"><b>Definition:</b> cbuild.h:838</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
