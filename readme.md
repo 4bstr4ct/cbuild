@@ -4,6 +4,12 @@ Header-only, self-hosting library for creating build configurations for any type
 
 The library provides utilities and functions to manipulate files, directories, and commands to create customized project building configurations.
 
+## Recent patch
+Reworked linux side of the library (Windows are not supported yet), added logging, examples, and test project. Updated docs.
+Currently, the library has these issues:
+1. Windows are not supported
+2. Self-rebuilding requires to run the build twice for changes to take effect.
+
 ## Builds situation
 
 Currently tool:

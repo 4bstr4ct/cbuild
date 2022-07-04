@@ -63,6 +63,10 @@
 #	define CBUILD_BOLD(string) "\033[1m"string"\033[0m"
 #endif
 
+#ifndef CBUILD_ECHO_LEVEL
+#	define CBUILD_ECHO_LEVEL 1
+#endif
+
 #ifndef ECHO
 #	define ECHO(...) fprintf(__VA_ARGS__);
 #endif
@@ -73,6 +77,10 @@
 
 #ifndef OR
 #	define OR ||
+#endif
+
+#ifndef NOT
+#	define NOT !
 #endif
 
 #ifndef STREQL
@@ -268,6 +276,10 @@ const char* _join(const char* const separator, ...)
  */
 int _isfile(const char* const path)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _isfile()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _isfile with Windows WIN32 API!");
 #else
@@ -310,6 +322,10 @@ int _isfile(const char* const path)
  */
 int _isdir(const char* const path)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _isdir()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _isdir with Windows WIN32 API!");
 #else
@@ -352,6 +368,10 @@ int _isdir(const char* const path)
  */
 int _exists(const char* const path)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _exists()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _exists with Windows WIN32 API!");
 #else
@@ -395,6 +415,10 @@ int _exists(const char* const path)
  */
 void _mkdir(int ignore, ...)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _mkdir()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _mkdir with Windows WIN32 API!");
 #else
@@ -422,13 +446,13 @@ void _mkdir(int ignore, ...)
 		{
 			if (errno == EEXIST)
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stderr, " -- "CBUILD_WARNING_LABEL" Directory `%s` already exists: "CBUILD_WARNING("%s")"\n", buffer, strerror(errno));
 #endif
 			}
 			else
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Failed to create directory at path `%s`: "CBUILD_ERROR("%s")"\n", buffer, strerror(errno));
 #endif
 
@@ -487,6 +511,10 @@ void _mkdir(int ignore, ...)
  */
 void _mkfile(int ignore, ...)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _mkfile()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _mkfile with Windows WIN32 API!");
 #else
@@ -517,13 +545,13 @@ void _mkfile(int ignore, ...)
 			{
 				if (errno == EEXIST)
 				{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 					ECHO(stderr, " -- "CBUILD_WARNING_LABEL" Directory `%s` already exists: "CBUILD_WARNING("%s")"\n", buffer, strerror(errno));
 #endif
 				}
 				else
 				{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 					ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Failed to create directory at path `%s`: "CBUILD_ERROR("%s")"\n", buffer, strerror(errno));
 #endif
 
@@ -538,13 +566,13 @@ void _mkfile(int ignore, ...)
 			{
 				if (errno == EEXIST)
 				{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 					ECHO(stderr, " -- "CBUILD_WARNING_LABEL" Path `%s` already exists: "CBUILD_WARNING("%s")"\n", buffer, strerror(errno));
 #endif
 				}
 				else
 				{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 					ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Failed to create file at path `%s`: "CBUILD_ERROR("%s")"\n", buffer, strerror(errno));
 #endif
 
@@ -594,6 +622,13 @@ void _mkfile(int ignore, ...)
 
 void _rm(const char* const path)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _rm()\n");
+#endif
+
+#ifdef _WINN32
+	assert(!"TODO: implement _rm with Windows WIN32 API!");
+#else
 	if (_isdir(path))
 	{
 		FOREACH_FILE_IN_DIRECTORY(file, path,
@@ -606,7 +641,7 @@ void _rm(const char* const path)
 		{
 			if (errno == ENOENT)
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stdout, CBUILD_WARNING_LABEL" Directory `%s` does not exist: "CBUILD_WARNING("%s")"\n", path, strerror(errno));
 #endif
 
@@ -614,7 +649,7 @@ void _rm(const char* const path)
 			}
 			else
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stderr, CBUILD_ERROR_LABEL" Failed to remove directory at path `%s`: "CBUILD_ERROR("%s")"\n", path, strerror(errno));
 #endif
 			}
@@ -626,7 +661,7 @@ void _rm(const char* const path)
 		{
 			if (errno == ENOENT)
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stdout, CBUILD_WARNING_LABEL" File `%s` does not exist: "CBUILD_WARNING("%s")"\n", path, strerror(errno));
 #endif
 
@@ -634,12 +669,13 @@ void _rm(const char* const path)
 			}
 			else
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stderr, CBUILD_ERROR_LABEL" Failed to remove file at path `%s`: "CBUILD_ERROR("%s")"\n", path, strerror(errno));
 #endif
 			}
 		}
 	}
+#endif
 }
 
 /**
@@ -676,12 +712,16 @@ void _rm(const char* const path)
  */
 void _mv(const char* const source, const char* const destination)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _mv()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _mv with Windows WIN32 API!");
 #else
 	if (rename(source, destination) < 0)
 	{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 				ECHO(stderr, CBUILD_ERROR_LABEL" Failed to move path from `%s` to `%s`: "CBUILD_ERROR("%s")"\n", source, destination, strerror(errno));
 #endif
 
@@ -726,6 +766,10 @@ void _mv(const char* const source, const char* const destination)
  */
 void _cmd(int ignore, ...)
 {
+#if CBUILD_ECHO_LEVEL >= 2
+	ECHO(stdout, " -- "CBUILD_TRACE_LABEL" Calling _cmd()\n");
+#endif
+
 #ifdef _WIN32
 	assert(!"TODO: implement _cmd with Windows WIN32 API!");
 #else
@@ -752,7 +796,7 @@ void _cmd(int ignore, ...)
 
 	if (childProcessId == -1)
 	{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 		ECHO(stderr, CBUILD_ERROR_LABEL" Failed to fork child process: "CBUILD_ERROR("%s")"\n", strerror(errno));
 #endif
 
@@ -764,7 +808,7 @@ void _cmd(int ignore, ...)
 	{
 		if (execvp(argv[0], (char* const *)argv) < 0)
 		{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 			ECHO(stderr, CBUILD_ERROR_LABEL" Failed to execute child process: "CBUILD_ERROR("%s")"\n", strerror(errno));
 #endif
 
@@ -785,7 +829,7 @@ void _cmd(int ignore, ...)
 
 				if (exitStatus != 0)
 				{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 					ECHO(stderr, CBUILD_ERROR_LABEL" Child process exited with code "CBUILD_ERROR("%d")"\n", exitStatus);
 #endif
 
@@ -798,7 +842,7 @@ void _cmd(int ignore, ...)
 
 			if (WIFSIGNALED(status))
 			{
-#ifndef CBUILD_NOECHO
+#if CBUILD_ECHO_LEVEL >= 1
 					ECHO(stderr, CBUILD_ERROR_LABEL" Child process was terminated by "CBUILD_ERROR("%d")" signal\n", WTERMSIG(status));
 #endif
 
