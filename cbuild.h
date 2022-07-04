@@ -13,9 +13,6 @@
 #	include <windows.h>
 #	include <process.h>
 
-typedef HANDLE _ProcessId;
-typedef HANDLE _FileHandle;
-
 #	error "Windows is not yet supported!"
 
 #else
@@ -24,169 +21,42 @@ typedef HANDLE _FileHandle;
 #	include <sys/wait.h>
 #	include <unistd.h>
 #	include <dirent.h>
+#	include <fcntl.h>
 
-typedef pid_t _ProcessId;
-typedef int _FileHandle;
 #endif
 
 
-
-/**
- * @addtogroup RBMM
- * 
- * @{
- */
-
-struct _RBMM_String
-{
-	char* buffer;
-	unsigned long long length;
-};
-
-struct _RBMM_String* _RBMM_createString(const char* const buffer)
-{
-	struct _RBMM_String* string = (struct _RBMM_String*)malloc(sizeof(struct _RBMM_String));
-	assert(string != NULL);
-	string->length = strlen(buffer);
-	string->buffer = (char*)malloc((string->length + 1) * sizeof(char));
-	assert(string->buffer != NULL);
-	memcpy(string->buffer, buffer, string->length);
-	string->buffer[string->length + 1] = '\0';
-	return string;
-}
-
-void _RBMM_destroyString(struct _RBMM_String* string)
-{
-	free(string->buffer);
-	free(string);
-}
-
-struct _RBMM_Node
-{
-	struct _RBMM_String* string;
-	struct _RBMM_Node* next;
-};
-
-struct _RBMM_Node* _RBMM_createNode(struct _RBMM_String* string, struct _RBMM_Node* next)
-{
-	struct _RBMM_Node* node = (struct _RBMM_Node*)malloc(sizeof(struct _RBMM_Node));
-	assert(node != NULL);
-	node->string = string;
-	node->next = next;
-	return node;
-}
-
-void _RBMM_destroyNode(struct _RBMM_Node* node)
-{
-	_RBMM_destroyString(node->string);
-	free(node);
-}
-
-struct _RBMM_Region
-{
-	struct _RBMM_Node* root;
-	struct _RBMM_Node* iterator;
-	unsigned long long count;
-};
-
-static struct _RBMM_Region* __region = NULL;
-
-void _RBMM_createRegion()
-{
-	__region = (struct _RBMM_Region*)malloc(sizeof(struct _RBMM_Region));
-	assert(__region != NULL);
-	__region->root = NULL;
-	__region->iterator = NULL;
-	__region->count = 0;
-}
-
-#ifndef CREATE_REGION
-#	define CREATE_REGION() \
-	{ \
-		_RBMM_createRegion(); \
-	}
-#endif
-
-void _RBMM_addToRegion(const char* const buffer)
-{
-	assert(__region != NULL);
-
-	if (__region->root == NULL)
-	{
-		__region->root = (struct _RBMM_Node*)malloc(sizeof(struct _RBMM_Node));
-		assert(__region->root != NULL);
-		__region->root = _RBMM_createNode(_RBMM_createString(buffer), NULL);
-		__region->iterator = __region->root;
-	}
-	else if (__region->iterator->next == NULL)
-	{
-		__region->iterator->next = (struct _RBMM_Node*)malloc(sizeof(struct _RBMM_Node));
-		assert(__region->iterator->next != NULL);
-		__region->iterator->next = _RBMM_createNode(_RBMM_createString(buffer), NULL);
-		__region->iterator = __region->iterator->next;
-	}
-
-	++__region->count;
-}
-
-#ifndef ADD_TO_REGION
-#	define ADD_TO_REGION(buffer) \
-	{ \
-		_RBMM_addToRegion(buffer); \
-	}
-#endif
-
-void _RBMM_destroyRegion()
-{
-	assert(__region != NULL);
-	__region->iterator = __region->root;
-
-	while (__region->iterator != NULL)
-	{
-		struct _RBMM_Node* temp = __region->iterator;
-		__region->iterator = __region->iterator->next;
-		_RBMM_destroyNode(temp);
-		--__region->count;
-	}
-
-	free(__region);
-}
-
-#ifndef DESTROY_REGION
-#	define DESTROY_REGION() \
-	{ \
-		_RBMM_destroyRegion(); \
-	}
-#endif
-
-/**
- * @}
- */
-
-
-
-#ifndef STDOUT
-#	define STDOUT stdout
-#endif
-
-#ifndef STDERR
-#	define STDERR stderr
-#endif
 
 #ifndef CBUILD_TRACE
-#	define CBUILD_TRACE "[CBUILD_TRACE]:"
+#	define CBUILD_TRACE(string) string
+#endif
+
+#ifndef CBUILD_TRACE_LABEL
+#	define CBUILD_TRACE_LABEL "["CBUILD_TRACE("TRACE")"]:"
 #endif
 
 #ifndef CBUILD_INFO
-#	define CBUILD_INFO "[\033[1;32mINFO\033[0m]:"
+#	define CBUILD_INFO(string) "\033[1;32m"string"\033[0m"
+#endif
+
+#ifndef CBUILD_INFO_LABEL
+#	define CBUILD_INFO_LABEL "["CBUILD_INFO("INFO")"]:"
 #endif
 
 #ifndef CBUILD_WARNING
-#	define CBUILD_WARNING "[\033[1;33mWARNING\033[0m]:"
+#	define CBUILD_WARNING(string) "\033[1;33m"string"\033[0m"
+#endif
+
+#ifndef CBUILD_WARNING_LABEL
+#	define CBUILD_WARNING_LABEL "["CBUILD_WARNING("WARNING")"]:"
 #endif
 
 #ifndef CBUILD_ERROR
-#	define CBUILD_ERROR "[\033[1;31mERROR\033[0m]:"
+#	define CBUILD_ERROR(string) "\033[1;31m"string"\033[0m"
+#endif
+
+#ifndef CBUILD_ERROR_LABEL
+#	define CBUILD_ERROR_LABEL "["CBUILD_ERROR("ERROR")"]:"
 #endif
 
 #ifndef CBUILD_BOLD
@@ -195,14 +65,6 @@ void _RBMM_destroyRegion()
 
 #ifndef ECHO
 #	define ECHO(...) fprintf(__VA_ARGS__);
-#endif
-
-#ifndef INTERNAL_ECHO
-#	ifdef CBUILD_NOECHO
-#		define INTERNAL_ECHO(...)
-#	else
-#		define INTERNAL_ECHO(...) fprintf(__VA_ARGS__);
-#	endif
 #endif
 
 #ifndef AND
@@ -277,10 +139,10 @@ const char* _shift(int* argc, char*** argv)
 	}
 #endif
 
-#ifndef IGNORE_IF_DOTS
-#	define IGNORE_IF_DOTS(file) \
+#ifndef IGNORE_DIRECTORY_IF_DOTS
+#	define IGNORE_DIRECTORY_IF_DOTS(file) \
 	{ \
-		if (STREQL(file, ".") OR STREQL(file, "..")) \
+		if ((strcmp(file, "..") == 0) || (strcmp(file, ".") == 0)) \
 		{ \
 			continue; \
 		} \
@@ -516,6 +378,98 @@ int _exists(const char* const path)
 
 
 /**
+ * @addtogroup MKDIR
+ * 
+ * @{
+ */
+
+/**
+ * Creates a directory and all subdirectories in the provided path.
+ * The path must be a NULL terminated variadic list of strings, not
+ * a regular path format!
+ * 
+ * @code{.c}
+ * 		_mkdir(0, "first", "second", "third", NULL);
+ * 		// Creates directories: 'first/', 'first/second/', and 'first/second/third/'
+ * @endcode
+ */
+void _mkdir(int ignore, ...)
+{
+#ifdef _WIN32
+	assert(!"TODO: implement _mkdir with Windows WIN32 API!");
+#else
+	signed long long separatorsCount = -1;
+	unsigned long long length = 0;
+	va_list args;
+
+	FOREACH_ARG_IN_VA_ARGS(ignore, const char*, arg, args,
+	{
+		length += strlen(arg);
+		++separatorsCount;
+	});
+
+	char* buffer = (char*)malloc((length + separatorsCount * PATH_SEPARATOR_LENGTH + 1) * sizeof(char));
+	length = 0;
+
+	FOREACH_ARG_IN_VA_ARGS(ignore, const char*, arg, args,
+	{
+		const unsigned long long argLength = strlen(arg);
+		memcpy(buffer + length, arg, argLength);
+		length += argLength;
+		buffer[length] = '\0';
+
+		if (mkdir(buffer, 0777) < 0)
+		{
+			if (errno == EEXIST)
+			{
+#ifndef CBUILD_NOECHO
+				ECHO(stderr, " -- "CBUILD_WARNING_LABEL" Directory `%s` already exists: "CBUILD_WARNING("%s")"\n", buffer, strerror(errno));
+#endif
+			}
+			else
+			{
+#ifndef CBUILD_NOECHO
+				ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Failed to create directory at path `%s`: "CBUILD_ERROR("%s")"\n", buffer, strerror(errno));
+#endif
+
+				free(buffer);
+				exit(1);
+			}
+		}
+
+		if (separatorsCount > 0)
+		{
+			memcpy(buffer + length, PATH_SEPARATOR, PATH_SEPARATOR_LENGTH);
+			length += PATH_SEPARATOR_LENGTH;
+			--separatorsCount;
+		}
+
+		buffer[length] = '\0';
+	});
+
+	free(buffer);
+#endif
+}
+
+/**
+ * Wraps @ref _mkdir function and handles first and last arguments.
+ * 
+ * @code{.c}
+ * 		MKDIR("first", "second", "third");
+ * 		// Creates directories: 'first/', 'first/second/', and 'first/second/third/'
+ * @endcode
+ */
+#ifndef MKDIR
+#	define MKDIR(...) _mkdir(0, __VA_ARGS__, NULL)
+#endif
+
+/**
+ * @}
+ */
+
+
+
+/**
  * @addtogroup MKFILE
  * 
  * @{
@@ -555,29 +509,59 @@ void _mkfile(int ignore, ...)
 		const unsigned long long argLength = strlen(arg);
 		memcpy(buffer + length, arg, argLength);
 		length += argLength;
+		buffer[length] = '\0';
+
+		if (separatorsCount > 0)
+		{
+			if (mkdir(buffer, 0777) == -1)
+			{
+				if (errno == EEXIST)
+				{
+#ifndef CBUILD_NOECHO
+					ECHO(stderr, " -- "CBUILD_WARNING_LABEL" Directory `%s` already exists: "CBUILD_WARNING("%s")"\n", buffer, strerror(errno));
+#endif
+				}
+				else
+				{
+#ifndef CBUILD_NOECHO
+					ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Failed to create directory at path `%s`: "CBUILD_ERROR("%s")"\n", buffer, strerror(errno));
+#endif
+
+					free(buffer);
+					exit(1);
+				}
+			}
+		}
+		else
+		{
+			if (open(buffer, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, S_IRWXU) == -1)
+			{
+				if (errno == EEXIST)
+				{
+#ifndef CBUILD_NOECHO
+					ECHO(stderr, " -- "CBUILD_WARNING_LABEL" Path `%s` already exists: "CBUILD_WARNING("%s")"\n", buffer, strerror(errno));
+#endif
+				}
+				else
+				{
+#ifndef CBUILD_NOECHO
+					ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Failed to create file at path `%s`: "CBUILD_ERROR("%s")"\n", buffer, strerror(errno));
+#endif
+
+					free(buffer);
+					exit(1);
+				}
+			}
+		}
 
 		if (separatorsCount > 0)
 		{
 			memcpy(buffer + length, PATH_SEPARATOR, PATH_SEPARATOR_LENGTH);
 			length += PATH_SEPARATOR_LENGTH;
-			--separatorsCount;
 		}
 
+		--separatorsCount;
 		buffer[length] = '\0';
-
-		if (fopen(buffer, "w") < 0)
-		{
-			if (errno == EEXIST)
-			{
-				INTERNAL_ECHO(stderr, " -- "CBUILD_WARNING" Directory %s already exists\n", buffer);
-			}
-			else
-			{
-				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not  create a file %s: %s\n", buffer, strerror(errno));
-				free(buffer);
-				exit(1);
-			}
-		}
 	});
 
 	free(buffer);
@@ -603,92 +587,6 @@ void _mkfile(int ignore, ...)
 
 
 /**
- * @addtogroup MKDIR
- * 
- * @{
- */
-
-/**
- * Creates a directory and all subdirectories in the provided path.
- * The path must be a NULL terminated variadic list of strings, not
- * a regular path format!
- * 
- * @code{.c}
- * 		_mkdir(0, "first", "second", "third", NULL);
- * 		// Creates directories: 'first/', 'first/second/', and 'first/second/third/'
- * @endcode
- */
-void _mkdir(int ignore, ...)
-{
-#ifdef _WIN32
-	assert(!"TODO: implement _mkdir with Windows WIN32 API!");
-#else
-	signed long long separatorsCount = -1;
-	unsigned long long length = 0;
-	va_list args;
-
-	FOREACH_ARG_IN_VA_ARGS(ignore, const char*, arg, args,
-	{
-		length += strlen(arg);
-		++separatorsCount;
-	});
-
-	char* buffer = (char*)malloc((length + separatorsCount * PATH_SEPARATOR_LENGTH + 1) * sizeof(char));
-	length = 0;
-
-	FOREACH_ARG_IN_VA_ARGS(ignore, const char*, arg, args,
-	{
-		const unsigned long long argLength = strlen(arg);
-		memcpy(buffer + length, arg, argLength);
-		length += argLength;
-
-		if (separatorsCount > 0)
-		{
-			memcpy(buffer + length, PATH_SEPARATOR, PATH_SEPARATOR_LENGTH);
-			length += PATH_SEPARATOR_LENGTH;
-			--separatorsCount;
-		}
-
-		buffer[length] = '\0';
-
-		if (mkdir(buffer, 0777) < 0)
-		{
-			if (errno == EEXIST)
-			{
-				INTERNAL_ECHO(stderr, " -- "CBUILD_WARNING" Directory %s already exists\n", buffer);
-			}
-			else
-			{
-				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not create directoy %s: %s\n", buffer, strerror(errno));
-				free(buffer);
-				exit(1);
-			}
-		}
-	});
-
-	free(buffer);
-#endif
-}
-
-/**
- * Wraps @ref _mkdir function and handles first and last arguments.
- * 
- * @code{.c}
- * 		MKDIR("first", "second", "third");
- * 		// Creates directories: 'first/', 'first/second/', and 'first/second/third/'
- * @endcode
- */
-#ifndef MKDIR
-#	define MKDIR(...) _mkdir(0, __VA_ARGS__, NULL)
-#endif
-
-/**
- * @}
- */
-
-
-
-/**
  * @addtogroup RM
  * 
  * @{
@@ -700,7 +598,7 @@ void _rm(const char* const path)
 	{
 		FOREACH_FILE_IN_DIRECTORY(file, path,
 		{
-			IGNORE_IF_DOTS(file);
+			IGNORE_DIRECTORY_IF_DOTS(file);
 			_rm(PATH(path, file));
 		});
 
@@ -708,12 +606,17 @@ void _rm(const char* const path)
 		{
 			if (errno == ENOENT)
 			{
+#ifndef CBUILD_NOECHO
+				ECHO(stdout, CBUILD_WARNING_LABEL" Directory `%s` does not exist: "CBUILD_WARNING("%s")"\n", path, strerror(errno));
+#endif
+
 				errno = 0;
-				INTERNAL_ECHO(stdout, CBUILD_WARNING" Directory %s does not exist", path);
 			}
 			else
 			{
-				INTERNAL_ECHO(stderr, CBUILD_ERROR" Could not remove directory %s: %s", path, strerror(errno));
+#ifndef CBUILD_NOECHO
+				ECHO(stderr, CBUILD_ERROR_LABEL" Failed to remove directory at path `%s`: "CBUILD_ERROR("%s")"\n", path, strerror(errno));
+#endif
 			}
 		}
 	}
@@ -723,12 +626,17 @@ void _rm(const char* const path)
 		{
 			if (errno == ENOENT)
 			{
+#ifndef CBUILD_NOECHO
+				ECHO(stdout, CBUILD_WARNING_LABEL" File `%s` does not exist: "CBUILD_WARNING("%s")"\n", path, strerror(errno));
+#endif
+
 				errno = 0;
-				INTERNAL_ECHO(stdout, CBUILD_WARNING" File %s does not exist!\n", path);
 			}
 			else
 			{
-				INTERNAL_ECHO(stderr, CBUILD_ERROR" Could not remove file %s: %s", path, strerror(errno));
+#ifndef CBUILD_NOECHO
+				ECHO(stderr, CBUILD_ERROR_LABEL" Failed to remove file at path `%s`: "CBUILD_ERROR("%s")"\n", path, strerror(errno));
+#endif
 			}
 		}
 	}
@@ -773,7 +681,10 @@ void _mv(const char* const source, const char* const destination)
 #else
 	if (rename(source, destination) < 0)
 	{
-		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not move %s to %s: %s\n", source, destination, strerror(errno));
+#ifndef CBUILD_NOECHO
+				ECHO(stderr, CBUILD_ERROR_LABEL" Failed to move path from `%s` to `%s`: "CBUILD_ERROR("%s")"\n", source, destination, strerror(errno));
+#endif
+
 		exit(1);
 	}
 #endif
@@ -841,7 +752,11 @@ void _cmd(int ignore, ...)
 
 	if (childProcessId == -1)
 	{
-		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not fork child process: %s\n", strerror(errno));
+#ifndef CBUILD_NOECHO
+		ECHO(stderr, CBUILD_ERROR_LABEL" Failed to fork child process: "CBUILD_ERROR("%s")"\n", strerror(errno));
+#endif
+
+		free(argv);
 		exit(1);
 	}
 
@@ -849,7 +764,11 @@ void _cmd(int ignore, ...)
 	{
 		if (execvp(argv[0], (char* const *)argv) < 0)
 		{
-			INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not execute child process: %s\n", strerror(errno));
+#ifndef CBUILD_NOECHO
+			ECHO(stderr, CBUILD_ERROR_LABEL" Failed to execute child process: "CBUILD_ERROR("%s")"\n", strerror(errno));
+#endif
+
+			free(argv);
 			exit(1);
 		}
 	}
@@ -866,7 +785,11 @@ void _cmd(int ignore, ...)
 
 				if (exitStatus != 0)
 				{
-					INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Child process exited with %d code\n", exitStatus);
+#ifndef CBUILD_NOECHO
+					ECHO(stderr, CBUILD_ERROR_LABEL" Child process exited with code "CBUILD_ERROR("%d")"\n", exitStatus);
+#endif
+
+					free(argv);
 					exit(1);
 				}
 
@@ -875,7 +798,11 @@ void _cmd(int ignore, ...)
 
 			if (WIFSIGNALED(status))
 			{
-				INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Child process was terminated by %d signal\n", WTERMSIG(status));
+#ifndef CBUILD_NOECHO
+					ECHO(stderr, CBUILD_ERROR_LABEL" Child process was terminated by "CBUILD_ERROR("%d")" signal\n", WTERMSIG(status));
+#endif
+
+				free(argv);
 				exit(1);
 			}
 		}
@@ -921,7 +848,7 @@ int _isCBuildModified(const char* sourcePath, const char* binaryPath)
 
 	if (stat(sourcePath, &info) < 0)
 	{
-		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not stat %s: %s\n", sourcePath, strerror(errno));
+		ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Could not stat %s: %s\n", sourcePath, strerror(errno));
 		exit(1);
 	}
 
@@ -929,7 +856,7 @@ int _isCBuildModified(const char* sourcePath, const char* binaryPath)
 
 	if (stat(binaryPath, &info) < 0)
 	{
-		INTERNAL_ECHO(stderr, " -- "CBUILD_ERROR" Could not stat %s: %s\n", binaryPath, strerror(errno));
+		ECHO(stderr, " -- "CBUILD_ERROR_LABEL" Could not stat %s: %s\n", binaryPath, strerror(errno));
 		exit(1);
 	}
 
@@ -962,7 +889,7 @@ void _rebuildMyself(const char* const sourcePath, const char* const binaryPath)
 {
 	if (_isCBuildModified(sourcePath, binaryPath))
 	{
-		INTERNAL_ECHO(stdout, CBUILD_INFO" Rebuilding CBUILD!\n");
+		ECHO(stdout, CBUILD_INFO_LABEL" Rebuilding CBUILD!\n");
 		MV(binaryPath, CONCAT(binaryPath, ".old"));
 		BUILD_MYSELF(binaryPath, sourcePath);
 		RM(CONCAT(binaryPath, ".old"));

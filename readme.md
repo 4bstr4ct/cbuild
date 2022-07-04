@@ -8,8 +8,9 @@ The library provides utilities and functions to manipulate files, directories, a
 
 Currently tool:
 1. Passed on [Fedora Silverblue 36](https://getfedora.org/en/silverblue/) GCC
-2. Failed on Windows 10 MSVC
-3. Was not tested on anything else
+2. Passed on Windows 10 MinGW-GCC
+3. Failed on Windows 10 MSVC
+4. Was not tested on anything else
 
 ## How to
 
