@@ -111,8 +111,8 @@ const char* _shift(int* argc, char*** argv)
 	return current;
 }
 
-#ifndef FOREACH_ARG_CMD_ARGS
-#	define FOREACH_ARG_CMD_ARGS(argument, count, arguments, body) \
+#ifndef FOREACH_ARG_IN_CMD_ARGS
+#	define FOREACH_ARG_IN_CMD_ARGS(argument, count, arguments, body) \
 	{ \
 		while (argc > 0) \
 		{ \
@@ -957,5 +957,19 @@ void _rebuildMyself(const char* const sourcePath, const char* const binaryPath)
 /**
  * @}
  */
+
+#endif
+
+
+
+#if !defined(CBUILD_H_C_EXTENTION) && defined(CBUILD_ENABLE_C_EXTENTION)
+#define CBUILD_H_C_EXTENTION
+
+#ifndef ADD_EXECUTABLE
+#	define ADD_EXECUTABLE(compiler, options, sources) \
+	{ \
+		CMD(compiler, options, sources); \
+	}
+#endif
 
 #endif
