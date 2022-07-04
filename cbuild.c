@@ -1,7 +1,9 @@
-#define CBUILD_ECHO_LEVEL 2		// Set echo level [0-3] (none to all)
-								// 2 - additional info about calls
-								// 3 - debuging info with a lot of data (recommended only for debugging purposes)
-#define CBUILD_IMPLEMENTATION	// Enable implementations
+#define CBUILD_ECHO_LEVEL 2		// Set echo level [0-3] (none to all):
+								// 0 - no logging from library, only from chld processes.
+								// 1 - default info from library, and chld processes.
+								// 2 - additional info about calls with everyhting from 1 and 2.
+								// 3 - everything + debuging info with a lot of data (recommended only for debugging purposes).
+#define CBUILD_IMPLEMENTATION	// Enable implementations.
 #include "./cbuild.h"
 
 static void _usage(FILE* stream, const char* const program)
@@ -16,10 +18,8 @@ int _main(const char* const program, int argc, char** argv)
 {
 	const char* project = NULL;
 
-	while (argc > 0)
+	FOREACH_ARG_CMD_ARGS(flag, argc, argv,
 	{
-		const char* flag = _shift(&argc, &argv);
-
 		if (STREQL(flag, "--project") OR STREQL(flag, "-p"))
 		{
 			project = _shift(&argc, &argv);
@@ -34,7 +34,7 @@ int _main(const char* const program, int argc, char** argv)
 			_usage(stderr, program);
 			exit(1);
 		}
-	}
+	});
 
 	ECHO(stdout, CBUILD_INFO_LABEL" Building `%s`...\n", project);
 	

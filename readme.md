@@ -9,6 +9,7 @@ Reworked linux side of the library (Windows are not supported yet), added loggin
 Currently, the library has these issues:
 1. Windows are not supported
 2. Self-rebuilding requires to run the build twice for changes to take effect.
+3. Library does not handle its memory yet.
 
 ## Builds situation
 
