@@ -60,7 +60,7 @@ The steps of workign with the tool are:
 You can check out the (cbuild.c)[./cbuild.c] file to get the general idea of how cbuil.h is used.
 
 ## Warning
-This is yet an experimental tool and has a very basic set of utilities. It currently does not provide functions for including directories for a target, linking etc.
+This is yet an experimental tool and has a very basic set of utilities. It currently does not provide functions for including directories for a target, linking etc. However, linking could be implemented using CMD call as a terminal command which would use a linker of a compiler to perform this task.
 Also, this whole tool is a giant memory leak! Memory managment will be added in the next patch.
 
 ## Thanks note
