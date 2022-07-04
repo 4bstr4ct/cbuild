@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['readme_2emd_0',['readme.md',['../d0/d20/readme_8md.html',1,'']]],
-  ['rebuild_5fmyself_1',['REBUILD_MYSELF',['../d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d',1,'cbuild.h']]],
-  ['rm_2',['RM',['../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec',1,'RM():&#160;cbuild.h'],['../d5/d04/group__RM.html',1,'(Global Namespace)']]]
+  ['path_0',['PATH',['../d5/d3f/group__STRUTILS.html#ga1a13fd58ba8d3b04c7815fc9c2c056e0',1,'cbuild.h']]],
+  ['path_5fseparator_1',['PATH_SEPARATOR',['../dc/dda/cbuild_8h.html#a256a5721249aa3309437212cc21a9fe4',1,'cbuild.h']]],
+  ['path_5fseparator_5flength_2',['PATH_SEPARATOR_LENGTH',['../dc/dda/cbuild_8h.html#a838a7df9dc51ec2edccd10a32f5d6f02',1,'cbuild.h']]],
+  ['pause_3',['PAUSE',['../d5/d7f/tests_8c.html#a5666ac5930c9f903698073ab1fa694f7',1,'tests.c']]],
+  ['platform_5fid_4',['PLATFORM_ID',['../d9/d4b/CMakeCCompilerId_8c.html#adbc5372f40838899018fadbc89bd588b',1,'CMakeCCompilerId.c']]]
 ];

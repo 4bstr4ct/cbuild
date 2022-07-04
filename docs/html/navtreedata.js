@@ -25,13 +25,14 @@
 var NAVTREE =
 [
   [ "CBuild", "index.html", [
-    [ "Builds situation", "index.html#autotoc_md1", null ],
-    [ "How to", "index.html#autotoc_md2", [
-      [ "Possible way to run on Windows:", "index.html#autotoc_md3", null ],
-      [ "And on Linux:", "index.html#autotoc_md4", null ]
+    [ "Recent patch", "index.html#autotoc_md1", null ],
+    [ "Builds situation", "index.html#autotoc_md2", null ],
+    [ "How to", "index.html#autotoc_md3", [
+      [ "Possible way to run on Windows:", "index.html#autotoc_md4", null ],
+      [ "And on Linux:", "index.html#autotoc_md5", null ]
     ] ],
-    [ "Warning", "index.html#autotoc_md5", null ],
-    [ "Thanks note", "index.html#autotoc_md6", null ],
+    [ "Warning", "index.html#autotoc_md6", null ],
+    [ "Thanks note", "index.html#autotoc_md7", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],

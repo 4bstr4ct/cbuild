@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['or_0',['OR',['../dc/dda/cbuild_8h.html#a3363ca4d6d3cc0230b2804280591c991',1,'cbuild.h']]]
+  ['not_0',['NOT',['../dc/dda/cbuild_8h.html#ad3e9fe0ec59d2dbb3982ababa042720c',1,'cbuild.h']]]
 ];

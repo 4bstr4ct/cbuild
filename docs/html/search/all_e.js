@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['selfbuilder_0',['SELFBUILDER',['../d0/dc7/group__SELFBUILDER.html',1,'']]],
-  ['streql_1',['STREQL',['../dc/dda/cbuild_8h.html#ab62a101e64c6b815cd42a3b23affc20d',1,'cbuild.h']]],
-  ['stringify_2',['STRINGIFY',['../d9/d4b/CMakeCCompilerId_8c.html#a43e1cad902b6477bec893cb6430bd6c8',1,'CMakeCCompilerId.c']]],
-  ['stringify_5fhelper_3',['STRINGIFY_HELPER',['../d9/d4b/CMakeCCompilerId_8c.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d',1,'CMakeCCompilerId.c']]],
-  ['strutils_4',['STRUTILS',['../d5/d3f/group__STRUTILS.html',1,'']]]
+  ['readme_2emd_0',['readme.md',['../d0/d20/readme_8md.html',1,'']]],
+  ['rebuild_5fmyself_1',['REBUILD_MYSELF',['../d0/dc7/group__SELFBUILDER.html#ga7860f249b31242a704f5fef5e88d719d',1,'cbuild.h']]],
+  ['rm_2',['RM',['../d5/d04/group__RM.html#ga23746d9168ce2722bef89fabac21d1ec',1,'RM():&#160;cbuild.h'],['../d5/d04/group__RM.html',1,'(Global Namespace)']]]
 ];
